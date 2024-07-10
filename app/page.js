@@ -5,45 +5,30 @@ import TapToEarnTab from '../components/TapToEarnTab';
 import TaskTab from '../components/TaskTab';
 import StatsTab from '../components/StatsTab';
 import ReferralsTab from '../components/ReferralTab'; // Corrected import
-import { retrieveLaunchParams } from '@telegram-apps/sdk';
 import Head from 'next/head';
 import Script from 'next/script';
+import Spinner from '../components/Spinner'; // Import the Spinner component
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('tapToEarn');
-  const [authorized, setAuthorized] = useState(false);
+  const [loading, setLoading] = useState(true); // State to manage loading spinner
   const [initData, setInitData] = useState(null); // Store init data
 
   useEffect(() => {
-    const { initDataRaw } = retrieveLaunchParams();
+    // Simulating data fetching delay for demonstration purposes
+    const fetchData = async () => {
+      setLoading(true);
+      // Replace with actual data fetching logic if needed
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
+      setLoading(false);
+    };
 
-    fetch('/api/auth', { // Pointing to the serverless function
-      method: 'POST',
-      headers: {
-        Authorization: `tma ${initDataRaw}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Assuming response is JSON
-      })
-      .then(data => {
-        // Handle response data
-        setInitData(data);
-        setAuthorized(true);
-      })
-      .catch(error => {
-        console.error('Error during fetch:', error);
-        setAuthorized(false);
-      });
+    fetchData();
   }, []);
 
   const renderTabContent = () => {
-    if (!authorized) {
-      return <div>Loading...</div>; // Show a loading state or a message
+    if (loading) {
+      return <Spinner />; // Show spinner while loading
     }
 
     switch (activeTab) {

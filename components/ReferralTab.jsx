@@ -3,13 +3,13 @@ import React from 'react';
 
 export default function ReferralsTab() {
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-black text-white">
+    <div className="flex flex-col items-center justify-start h-full bg-black text-white p-4">
       <h2 className="text-3xl font-bold mb-4">Referrals Tab</h2>
       <p className="text-lg text-gray-300 mb-8 text-center">
         Manage and track referral programs, display top referrers, and provide rewards.
       </p>
       {/* Add your referral program management UI here */}
-      <div className="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-lg">
+      <div className="bg-gray-800 rounded-lg shadow-lg w-full max-w-lg p-6">
         {/* Example UI for referral program management */}
         <h3 className="text-xl font-bold mb-4">Manage Your Referral Program</h3>
         <div className="mb-4">
