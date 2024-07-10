@@ -1,17 +1,50 @@
-// pages/index.js
 'use client'
 // pages/index.js
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaUserFriends, FaChartBar, FaTasks, FaHandPointer } from 'react-icons/fa';
 import TapToEarnTab from '../components/TapToEarnTab';
 import TaskTab from '../components/TaskTab';
 import StatsTab from '../components/StatsTab';
-import ReferralsTab from '../components/ReferalTab';
+import ReferralsTab from '../components/ReferalTab'; // Corrected import
+import { retrieveLaunchParams } from '@telegram-apps/sdk';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('tapToEarn');
+  const [authorized, setAuthorized] = useState(false);
+  const [initData, setInitData] = useState(null); // Store init data
+
+  useEffect(() => {
+    const { initDataRaw } = retrieveLaunchParams();
+
+    fetch('/api/auth', { // Pointing to the serverless function
+      method: 'POST',
+      headers: {
+        Authorization: `tma ${initDataRaw}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json(); // Assuming response is JSON
+    })
+    .then(data => {
+      // Handle response data
+      setInitData(data);
+      setAuthorized(true);
+    })
+    .catch(error => {
+      console.error('Error during fetch:', error);
+      setAuthorized(false);
+    });
+  }, []);
 
   const renderTabContent = () => {
+    if (!authorized) {
+      return <div>Loading...</div>; // Show a loading state or a message
+    }
+    
     switch (activeTab) {
       case 'referrals':
         return <ReferralsTab />;
