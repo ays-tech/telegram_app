@@ -1,5 +1,3 @@
-// components/TaskTab.jsx
-"use client";
 import React, { useState } from 'react';
 
 export default function TaskTab() {
@@ -7,8 +5,8 @@ export default function TaskTab() {
   const [socialTasksCompleted, setSocialTasksCompleted] = useState({
     twitterFollow: false,
     instagramFollow: false,
-    pinterestLike: false,
-    pinterestRetweet: false,
+    telegramJoin: false,
+    twitterRetweet: false,
     redditFollow: false,
     boughtTokens: false,
   });
@@ -23,23 +21,23 @@ export default function TaskTab() {
     switch (task) {
       case 'twitterFollow':
         setSocialTasksCompleted({ ...socialTasksCompleted, twitterFollow: true });
-        // Logic for rewarding Twitter follow task
+        window.open('https://twitter.com/turbosignals', '_blank'); // Example: Open Twitter page in a new tab
         break;
       case 'instagramFollow':
         setSocialTasksCompleted({ ...socialTasksCompleted, instagramFollow: true });
-        // Logic for rewarding Instagram follow task
+        window.open('https://www.instagram.com/turbosignalscommunity/', '_blank'); // Example: Open Instagram page in a new tab
         break;
-      case 'pinterestLike':
-        setSocialTasksCompleted({ ...socialTasksCompleted, pinterestLike: true });
-        // Logic for rewarding Pinterest like task
+      case 'telegramJoin':
+        // Logic to check if user has joined Telegram group
+        checkTelegramJoinStatus();
         break;
-      case 'pinterestRetweet':
-        setSocialTasksCompleted({ ...socialTasksCompleted, pinterestRetweet: true });
-        // Logic for rewarding Pinterest retweet task
+      case 'twitterRetweet':
+        setSocialTasksCompleted({ ...socialTasksCompleted, twitterRetweet: true });
+        window.open('https://twitter.com/turbosignals/status/1808800471437414713?s=52&t=aFmrCA95ZOgooiaYjEAooA', '_blank'); // Example: Open Twitter retweet link in a new tab
         break;
       case 'redditFollow':
         setSocialTasksCompleted({ ...socialTasksCompleted, redditFollow: true });
-        // Logic for rewarding Reddit follow task
+        window.open('https://www.reddit.com/r/turbosignals/', '_blank'); // Example: Open Reddit page in a new tab
         break;
       case 'buyTokens':
         setSocialTasksCompleted({ ...socialTasksCompleted, boughtTokens: true });
@@ -47,6 +45,18 @@ export default function TaskTab() {
         break;
       default:
         break;
+    }
+  };
+
+  const checkTelegramJoinStatus = () => {
+    // Simulating checking if user has joined Telegram group
+    const hasJoinedTelegram = true; // Replace with actual logic to check membership
+
+    if (hasJoinedTelegram) {
+      setSocialTasksCompleted({ ...socialTasksCompleted, telegramJoin: true });
+      window.open('https://t.me/turbosignalscommunity', '_blank'); // Open Telegram group link if joined
+    } else {
+      alert('Please join the Telegram group to complete this task.');
     }
   };
 
@@ -75,7 +85,7 @@ export default function TaskTab() {
             {!socialTasksCompleted.twitterFollow ? (
               <button
                 onClick={() => handleSocialTask('twitterFollow')}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="task-button"
               >
                 Follow
               </button>
@@ -88,7 +98,7 @@ export default function TaskTab() {
             {!socialTasksCompleted.instagramFollow ? (
               <button
                 onClick={() => handleSocialTask('instagramFollow')}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="task-button"
               >
                 Follow
               </button>
@@ -97,29 +107,29 @@ export default function TaskTab() {
             )}
           </li>
           <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Like $TSBot&apos;s pinned post on Pinterest:</span>
-            {!socialTasksCompleted.pinterestLike ? (
+            <span className="font-semibold">Join $TSBot Telegram group:</span>
+            {!socialTasksCompleted.telegramJoin ? (
               <button
-                onClick={() => handleSocialTask('pinterestLike')}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => handleSocialTask('telegramJoin')}
+                className="task-button"
               >
-                Like
+                Join
               </button>
             ) : (
-              <span className="text-green-500">Completed!</span>
+              <span className="text-green-500">Joined!</span>
             )}
           </li>
           <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Retweet $TSBot&apos;s pinned post on Pinterest:</span>
-            {!socialTasksCompleted.pinterestRetweet ? (
+            <span className="font-semibold">Retweet $TSBot's tweet:</span>
+            {!socialTasksCompleted.twitterRetweet ? (
               <button
-                onClick={() => handleSocialTask('pinterestRetweet')}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => handleSocialTask('twitterRetweet')}
+                className="task-button"
               >
                 Retweet
               </button>
             ) : (
-              <span className="text-green-500">Completed!</span>
+              <span className="text-green-500">Retweeted!</span>
             )}
           </li>
           <li className="flex items-center justify-between py-2">
@@ -127,7 +137,7 @@ export default function TaskTab() {
             {!socialTasksCompleted.redditFollow ? (
               <button
                 onClick={() => handleSocialTask('redditFollow')}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="task-button"
               >
                 Follow
               </button>
@@ -140,7 +150,7 @@ export default function TaskTab() {
             {!socialTasksCompleted.boughtTokens ? (
               <button
                 onClick={() => handleSocialTask('buyTokens')}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="task-button"
               >
                 Buy Tokens
               </button>
