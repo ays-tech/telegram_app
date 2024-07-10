@@ -97,7 +97,7 @@ export default function TaskTab() {
             )}
           </li>
           <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Like $TSBot's pinned post on Pinterest:</span>
+            <span className="font-semibold">Like $TSBot&apos;s pinned post on Pinterest:</span>
             {!socialTasksCompleted.pinterestLike ? (
               <button
                 onClick={() => handleSocialTask('pinterestLike')}
@@ -110,7 +110,7 @@ export default function TaskTab() {
             )}
           </li>
           <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Retweet $TSBot's pinned post on Pinterest:</span>
+            <span className="font-semibold">Retweet $TSBot&apos;s pinned post on Pinterest:</span>
             {!socialTasksCompleted.pinterestRetweet ? (
               <button
                 onClick={() => handleSocialTask('pinterestRetweet')}
