@@ -1,12 +1,13 @@
-'use client'
-// pages/index.js
+'use client';
 import { useEffect, useState } from 'react';
 import { FaUserFriends, FaChartBar, FaTasks, FaHandPointer } from 'react-icons/fa';
 import TapToEarnTab from '../components/TapToEarnTab';
 import TaskTab from '../components/TaskTab';
 import StatsTab from '../components/StatsTab';
-import ReferralsTab from '../components/ReferalTab'; // Corrected import
+import ReferralsTab from '../components/ReferralTab'; // Corrected import
 import { retrieveLaunchParams } from '@telegram-apps/sdk';
+import Head from 'next/head';
+import Script from 'next/script';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('tapToEarn');
@@ -23,28 +24,28 @@ export default function Home() {
         'Content-Type': 'application/json',
       },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json(); // Assuming response is JSON
-    })
-    .then(data => {
-      // Handle response data
-      setInitData(data);
-      setAuthorized(true);
-    })
-    .catch(error => {
-      console.error('Error during fetch:', error);
-      setAuthorized(false);
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming response is JSON
+      })
+      .then(data => {
+        // Handle response data
+        setInitData(data);
+        setAuthorized(true);
+      })
+      .catch(error => {
+        console.error('Error during fetch:', error);
+        setAuthorized(false);
+      });
   }, []);
 
   const renderTabContent = () => {
     if (!authorized) {
       return <div>Loading...</div>; // Show a loading state or a message
     }
-    
+
     switch (activeTab) {
       case 'referrals':
         return <ReferralsTab />;
@@ -59,6 +60,10 @@ export default function Home() {
 
   return (
     <div>
+      <Head>
+        <title>TSBot Mini App</title>
+      </Head>
+      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       <div className="tab-content">
         {renderTabContent()}
       </div>

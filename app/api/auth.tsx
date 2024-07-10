@@ -1,17 +1,18 @@
-// pages/api/auth.js
+// pages/api/auth.ts
 
 import { validate, parse, type InitDataParsed } from '@telegram-apps/init-data-node';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest } from 'next';
+import type { ExtendedNextApiResponse } from '../../types/ExtendedNextApiResponse';
 
 // Your secret bot token
-const token = '1234567890:ABC';
+const token = '7483595935:AAEJq_ZAUNMqMME0U7J1LyPo4hwM_CRNPqY';
 
 /**
  * Sets init data in the specified Response object.
  * @param res - Response object.
  * @param initData - init data.
  */
-function setInitData(res: NextApiResponse, initData: InitDataParsed): void {
+function setInitData(res: ExtendedNextApiResponse, initData: InitDataParsed): void {
   res.locals = res.locals || {};
   res.locals.initData = initData;
 }
@@ -22,7 +23,7 @@ function setInitData(res: NextApiResponse, initData: InitDataParsed): void {
  * @returns Init data stored in the Response object. Can return undefined in case,
  * the client is not authorized.
  */
-function getInitData(res: NextApiResponse): InitDataParsed | undefined {
+function getInitData(res: ExtendedNextApiResponse): InitDataParsed | undefined {
   return res.locals?.initData;
 }
 
@@ -32,7 +33,7 @@ function getInitData(res: NextApiResponse): InitDataParsed | undefined {
  * @param res - Response object.
  * @param next - function to call the next middleware.
  */
-const authMiddleware = (req: NextApiRequest, res: NextApiResponse, next: (error?: Error) => void) => {
+const authMiddleware = (req: NextApiRequest, res: ExtendedNextApiResponse, next: (error?: Error) => void) => {
   const [authType, authData = ''] = (req.headers.authorization || '').split(' ');
 
   switch (authType) {
@@ -61,7 +62,7 @@ const authMiddleware = (req: NextApiRequest, res: NextApiResponse, next: (error?
  * @param req
  * @param res - Response object.
  */
-const showInitDataHandler = (req: NextApiRequest, res: NextApiResponse) => {
+const showInitDataHandler = (req: NextApiRequest, res: ExtendedNextApiResponse) => {
   const initData = getInitData(res);
   if (!initData) {
     return res.status(401).json({ error: 'Cant display init data as long as it was not found' });
@@ -75,14 +76,14 @@ const showInitDataHandler = (req: NextApiRequest, res: NextApiResponse) => {
  * @param req
  * @param res - Response object.
  */
-const defaultErrorMiddleware = (err: Error, req: NextApiRequest, res: NextApiResponse) => {
+const defaultErrorMiddleware = (err: Error, req: NextApiRequest, res: ExtendedNextApiResponse) => {
   res.status(500).json({
     error: err.message,
   });
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const runMiddleware = (req: NextApiRequest, res: NextApiResponse, fn: Function) =>
+export default async (req: NextApiRequest, res: ExtendedNextApiResponse) => {
+  const runMiddleware = (req: NextApiRequest, res: ExtendedNextApiResponse, fn: Function) =>
     new Promise((resolve, reject) => {
       fn(req, res, (result: any) => {
         if (result instanceof Error) {
