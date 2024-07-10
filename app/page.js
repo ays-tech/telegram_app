@@ -2,7 +2,7 @@
 'use client'
 // pages/index.js
 import { useState } from 'react';
-import { FaUserFriends, FaChartBar, FaTasks } from 'react-icons/fa';
+import { FaUserFriends, FaChartBar, FaTasks, FaHandPointer } from 'react-icons/fa';
 import TapToEarnTab from '../components/TapToEarnTab';
 import TaskTab from '../components/TaskTab';
 import StatsTab from '../components/StatsTab';
@@ -41,7 +41,8 @@ export default function Home() {
           onClick={() => setActiveTab('tapToEarn')}
           className={`flex items-center justify-center flex-col text-white ${activeTab === 'tapToEarn' ? 'text-blue-500' : ''}`}
         >
-          <span>Tap to Earn</span>
+          <FaHandPointer size={24} /> {/* Icon for Tap to Earn */}
+          <span className="text-xs mt-1">Tap</span> {/* Updated text to 'Tap' */}
         </button>
         <button
           onClick={() => setActiveTab('tasks')}
