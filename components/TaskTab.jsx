@@ -120,7 +120,7 @@ export default function TaskTab() {
             )}
           </li>
           <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Retweet $TSBot's tweet:</span>
+            <span className="font-semibold">Retweet $TSBot&apos;s tweet:</span>
             {!socialTasksCompleted.twitterRetweet ? (
               <button
                 onClick={() => handleSocialTask('twitterRetweet')}
