@@ -1,0 +1,63 @@
+// pages/index.js
+'use client'
+// pages/index.js
+import { useState } from 'react';
+import { FaUserFriends, FaChartBar, FaTasks } from 'react-icons/fa';
+import TapToEarnTab from '../components/TapToEarnTab';
+import TaskTab from '../components/TaskTab';
+import StatsTab from '../components/StatsTab';
+import ReferralsTab from '../components/ReferalTab';
+
+export default function Home() {
+  const [activeTab, setActiveTab] = useState('tapToEarn');
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'referrals':
+        return <ReferralsTab />;
+      case 'tasks':
+        return <TaskTab />;
+      case 'stats':
+        return <StatsTab />;
+      default:
+        return <TapToEarnTab />;
+    }
+  };
+
+  return (
+    <div>
+      <div className="tab-content">
+        {renderTabContent()}
+      </div>
+      <div className="bottom-navigation flex justify-around bg-gray-800 p-4 fixed bottom-0 left-0 right-0">
+        <button
+          onClick={() => setActiveTab('referrals')}
+          className={`flex items-center justify-center flex-col text-white ${activeTab === 'referrals' ? 'text-blue-500' : ''}`}
+        >
+          <FaUserFriends size={24} />
+          <span className="text-xs mt-1">Referrals</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('tapToEarn')}
+          className={`flex items-center justify-center flex-col text-white ${activeTab === 'tapToEarn' ? 'text-blue-500' : ''}`}
+        >
+          <span>Tap to Earn</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('tasks')}
+          className={`flex items-center justify-center flex-col text-white ${activeTab === 'tasks' ? 'text-blue-500' : ''}`}
+        >
+          <FaTasks size={24} />
+          <span className="text-xs mt-1">Tasks</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('stats')}
+          className={`flex items-center justify-center flex-col text-white ${activeTab === 'stats' ? 'text-blue-500' : ''}`}
+        >
+          <FaChartBar size={24} />
+          <span className="text-xs mt-1">Stats</span>
+        </button>
+      </div>
+    </div>
+  );
+}
