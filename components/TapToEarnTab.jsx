@@ -28,12 +28,37 @@ export default function TapToEarnTab() {
       if (elapsedTime < RESET_TIME_HOURS) {
         setCanClaim(false);
         setTimeLeft(RESET_TIME_HOURS - elapsedTime);
+        setProgressPercentage((elapsedTime / RESET_TIME_HOURS) * 100);
+        setIsSpinning(true);
       } else {
         setCanClaim(true);
         setTimeLeft(0);
+        setProgressPercentage(100);
+        setIsSpinning(false);
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (timeLeft !== null) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 0) {
+            clearInterval(timer);
+            setCanClaim(true);
+            setProgressPercentage(100);
+            setIsSpinning(false);
+            return 0;
+          }
+          const newTimeLeft = prev - (1 / 3600); // Decrease by 1 second
+          setProgressPercentage(((RESET_TIME_HOURS - newTimeLeft) / RESET_TIME_HOURS) * 100);
+          return newTimeLeft;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft]);
 
   const handleTap = () => {
     if (!canClaim && !isSpinning) {
@@ -65,25 +90,9 @@ export default function TapToEarnTab() {
       setCanClaim(false);
       setProgressPercentage(0);
       setTimeLeft(RESET_TIME_HOURS);
+      setIsSpinning(true);
     }
   };
-
-  useEffect(() => {
-    if (timeLeft !== null) {
-      const timer = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 0) {
-            clearInterval(timer);
-            setCanClaim(true);
-            return 0;
-          }
-          return prev - (1 / 3600); // Decrease by 1 second
-        });
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [timeLeft]);
 
   const formatTimeLeft = (hours) => {
     const hrs = Math.floor(hours);
