@@ -12,7 +12,7 @@ const TASKS_CONFIG = [
   {
     id: 'instagramFollow',
     label: 'Follow $TSBot on Instagram',
-    url: 'https://www.instagram.com/turbosignalscommunity/',
+    url: 'https://www.instagram.com/turbosignalstrading/',
     actionText: 'Follow',
   },
   {
