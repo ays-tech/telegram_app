@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const TASKS_CONFIG = [
   {
@@ -7,8 +7,6 @@ const TASKS_CONFIG = [
     url: 'https://twitter.com/turbosignals',
     actionText: 'Follow',
   },
-
-  
   {
     id: 'instagramFollow',
     label: 'Follow $TSBot on Instagram',
@@ -45,6 +43,14 @@ export default function TaskTab() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState({});
   const [socialTasksCompleted, setSocialTasksCompleted] = useState({});
+  const [totalPoints, setTotalPoints] = useState(0);
+
+  useEffect(() => {
+    const storedPoints = localStorage.getItem('totalPoints');
+    if (storedPoints) {
+      setTotalPoints(parseInt(storedPoints));
+    }
+  }, []);
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -73,6 +79,13 @@ export default function TaskTab() {
   const completeTask = (taskId) => {
     setIsLoading((prevLoading) => ({ ...prevLoading, [taskId]: false }));
     setSocialTasksCompleted((prevTasks) => ({ ...prevTasks, [taskId]: true }));
+    updateTotalPoints(2); // Add 2 points for completing the task
+  };
+
+  const updateTotalPoints = (points) => {
+    const newTotalPoints = totalPoints + points;
+    setTotalPoints(newTotalPoints);
+    localStorage.setItem('totalPoints', newTotalPoints.toString());
   };
 
   const checkTelegramJoinStatus = (task) => {
@@ -92,6 +105,7 @@ export default function TaskTab() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white font-sans">
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold mb-4">Complete the Challenges, Earn the Rewards!</h2>
+        <h3 className="text-2xl mb-4">Total Points: {totalPoints}</h3>
       </div>
 
       <div className="w-full max-w-lg bg-gray-800 rounded-lg shadow-lg p-6">
