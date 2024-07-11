@@ -124,16 +124,16 @@ export default function TapToEarnTab() {
       </div>
 
       {/* Token collection progress */}
-      <div className="flex items-center justify-center w-full mb-8">
-        <div className="bg-gray-800 w-64 rounded-full h-8 overflow-hidden">
-          <div
-            className="bg-blue-500 h-full text-center text-white font-bold"
-            style={{ width: `${progressPercentage}%` }}
-          >
-            {progressPercentage.toFixed(2)}%
-          </div>
-        </div>
-      </div>
+     <div className="flex items-center justify-center w-full mb-8">
+  <div className="bg-gray-800 w-64 rounded-full h-8 overflow-hidden relative">
+    <div
+      className="bg-blue-500 h-full text-center text-white font-bold absolute inset-y-0 left-0"
+      style={{ width: `${progressPercentage}%` }}
+    >
+        {progressPercentage.toFixed(2)}%
+    </div>
+  </div>
+</div>
 
       {/* Claim Reward button */}
       <div className="flex flex-col items-center justify-center text-center">
