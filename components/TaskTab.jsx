@@ -26,9 +26,16 @@ const TASKS_CONFIG = [
     actionText: 'Retweet',
   },
   {
-    id: 'redditFollow',
-    label: 'Follow $TSBot on Reddit',
-    url: 'https://www.reddit.com/r/turbosignals/',
+    id: 'vote',
+    label: 'Vote us on coinmooner',
+    url: 'https://coinmooner.com/coin/turbosignals-tsbot',
+    actionText: 'Vote',
+    
+  }, 
+{
+    id: 'youtubeFollow',
+    label: 'Subscribe Youtube channel',
+    url: 'https://youtube.com/turbosignals/',
     actionText: 'Follow',
   },
   {
