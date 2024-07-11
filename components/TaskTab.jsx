@@ -102,18 +102,18 @@ export default function TaskTab() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white font-sans">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white font-sans">
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold mb-4">Complete the Challenges, Earn the Rewards!</h2>
         <h3 className="text-2xl mb-4">Total Points: {totalPoints}</h3>
       </div>
 
       <div className="w-full max-w-lg bg-gray-800 rounded-lg shadow-lg p-6">
-        <h3 className="text-2xl font-bold mb-4">Social Media Tasks</h3>
-        <ul>
+        <h3 className="text-2xl font-bold mb-4 text-center text-gray-300">Social Media Tasks</h3>
+        <ul className="space-y-4">
           {TASKS_CONFIG.map((task) => (
             <li key={task.id} className="flex items-center justify-between py-2 border-b border-gray-700">
-              <span className="font-semibold">{task.label}:</span>
+              <span className="font-semibold text-gray-300">{task.label}:</span>
               {!socialTasksCompleted[task.id] ? (
                 isLoading[task.id] ? (
                   <div className="spinner-border animate-spin inline-block w-4 h-4 border-4 rounded-full border-blue-500 border-t-transparent"></div>
