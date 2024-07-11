@@ -1,15 +1,50 @@
 import React, { useState } from 'react';
 
+const TASKS_CONFIG = [
+  {
+    id: 'twitterFollow',
+    label: 'Follow $TSBot on Twitter',
+    url: 'https://twitter.com/turbosignals',
+    actionText: 'Follow',
+  },
+
+  
+  {
+    id: 'instagramFollow',
+    label: 'Follow $TSBot on Instagram',
+    url: 'https://www.instagram.com/turbosignalscommunity/',
+    actionText: 'Follow',
+  },
+  {
+    id: 'telegramJoin',
+    label: 'Join $TSBot Telegram group',
+    actionText: 'Join',
+    customAction: true, // Special case for custom action
+  },
+  {
+    id: 'twitterRetweet',
+    label: 'Retweet $TSBot\'s tweet',
+    url: 'https://twitter.com/turbosignals/status/1808800471437414713?s=52&t=aFmrCA95ZOgooiaYjEAooA',
+    actionText: 'Retweet',
+  },
+  {
+    id: 'redditFollow',
+    label: 'Follow $TSBot on Reddit',
+    url: 'https://www.reddit.com/r/turbosignals/',
+    actionText: 'Follow',
+  },
+  {
+    id: 'buyTokens',
+    label: 'Buy $TSBot tokens',
+    actionText: 'Buy Tokens',
+    customAction: true, // Special case for custom action
+  },
+];
+
 export default function TaskTab() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [socialTasksCompleted, setSocialTasksCompleted] = useState({
-    twitterFollow: false,
-    instagramFollow: false,
-    telegramJoin: false,
-    twitterRetweet: false,
-    redditFollow: false,
-    boughtTokens: false,
-  });
+  const [isLoading, setIsLoading] = useState({});
+  const [socialTasksCompleted, setSocialTasksCompleted] = useState({});
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -18,146 +53,69 @@ export default function TaskTab() {
   };
 
   const handleSocialTask = (task) => {
-    switch (task) {
-      case 'twitterFollow':
-        setSocialTasksCompleted({ ...socialTasksCompleted, twitterFollow: true });
-        window.open('https://twitter.com/turbosignals', '_blank'); // Example: Open Twitter page in a new tab
-        break;
-      case 'instagramFollow':
-        setSocialTasksCompleted({ ...socialTasksCompleted, instagramFollow: true });
-        window.open('https://www.instagram.com/turbosignalscommunity/', '_blank'); // Example: Open Instagram page in a new tab
-        break;
-      case 'telegramJoin':
-        // Logic to check if user has joined Telegram group
-        checkTelegramJoinStatus();
-        break;
-      case 'twitterRetweet':
-        setSocialTasksCompleted({ ...socialTasksCompleted, twitterRetweet: true });
-        window.open('https://twitter.com/turbosignals/status/1808800471437414713?s=52&t=aFmrCA95ZOgooiaYjEAooA', '_blank'); // Example: Open Twitter retweet link in a new tab
-        break;
-      case 'redditFollow':
-        setSocialTasksCompleted({ ...socialTasksCompleted, redditFollow: true });
-        window.open('https://www.reddit.com/r/turbosignals/', '_blank'); // Example: Open Reddit page in a new tab
-        break;
-      case 'buyTokens':
-        setSocialTasksCompleted({ ...socialTasksCompleted, boughtTokens: true });
+    setIsLoading((prevLoading) => ({ ...prevLoading, [task.id]: true }));
+
+    if (task.customAction) {
+      if (task.id === 'telegramJoin') {
+        checkTelegramJoinStatus(task);
+      } else if (task.id === 'buyTokens') {
         // Logic for rewarding token purchase task
-        break;
-      default:
-        break;
+        completeTask(task.id);
+      }
+    } else {
+      window.open(task.url, '_blank');
+      setTimeout(() => {
+        completeTask(task.id);
+      }, 10000); // 10 seconds delay
     }
   };
 
-  const checkTelegramJoinStatus = () => {
+  const completeTask = (taskId) => {
+    setIsLoading((prevLoading) => ({ ...prevLoading, [taskId]: false }));
+    setSocialTasksCompleted((prevTasks) => ({ ...prevTasks, [taskId]: true }));
+  };
+
+  const checkTelegramJoinStatus = (task) => {
     // Simulating checking if user has joined Telegram group
     const hasJoinedTelegram = true; // Replace with actual logic to check membership
 
     if (hasJoinedTelegram) {
-      setSocialTasksCompleted({ ...socialTasksCompleted, telegramJoin: true });
+      completeTask(task.id);
       window.open('https://t.me/turbosignalscommunity', '_blank'); // Open Telegram group link if joined
     } else {
       alert('Please join the Telegram group to complete this task.');
+      setIsLoading((prevLoading) => ({ ...prevLoading, [task.id]: false }));
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-black text-white">
-      <h2 className="text-3xl font-bold mb-4">Tasks</h2>
-
-      <div className="mb-8">
-        {!loggedIn ? (
-          <button
-            onClick={handleLogin}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Log In for Daily Reward
-          </button>
-        ) : (
-          <p className="text-green-500">Daily login reward claimed!</p>
-        )}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white font-sans">
+      <div className="text-center mb-8">
+        <h2 className="text-4xl font-bold mb-4">Complete the Challenges, Earn the Rewards!</h2>
       </div>
 
       <div className="w-full max-w-lg bg-gray-800 rounded-lg shadow-lg p-6">
-        <h3 className="text-xl font-bold mb-4">Social Media Tasks</h3>
+        <h3 className="text-2xl font-bold mb-4">Social Media Tasks</h3>
         <ul>
-          <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Follow $TSBot on Twitter:</span>
-            {!socialTasksCompleted.twitterFollow ? (
-              <button
-                onClick={() => handleSocialTask('twitterFollow')}
-                className="task-button"
-              >
-                Follow
-              </button>
-            ) : (
-              <span className="text-green-500">Completed!</span>
-            )}
-          </li>
-          <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Follow $TSBot on Instagram:</span>
-            {!socialTasksCompleted.instagramFollow ? (
-              <button
-                onClick={() => handleSocialTask('instagramFollow')}
-                className="task-button"
-              >
-                Follow
-              </button>
-            ) : (
-              <span className="text-green-500">Completed!</span>
-            )}
-          </li>
-          <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Join $TSBot Telegram group:</span>
-            {!socialTasksCompleted.telegramJoin ? (
-              <button
-                onClick={() => handleSocialTask('telegramJoin')}
-                className="task-button"
-              >
-                Join
-              </button>
-            ) : (
-              <span className="text-green-500">Joined!</span>
-            )}
-          </li>
-          <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Retweet $TSBot&apos;s tweet:</span>
-            {!socialTasksCompleted.twitterRetweet ? (
-              <button
-                onClick={() => handleSocialTask('twitterRetweet')}
-                className="task-button"
-              >
-                Retweet
-              </button>
-            ) : (
-              <span className="text-green-500">Retweeted!</span>
-            )}
-          </li>
-          <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Follow $TSBot on Reddit:</span>
-            {!socialTasksCompleted.redditFollow ? (
-              <button
-                onClick={() => handleSocialTask('redditFollow')}
-                className="task-button"
-              >
-                Follow
-              </button>
-            ) : (
-              <span className="text-green-500">Completed!</span>
-            )}
-          </li>
-          <li className="flex items-center justify-between py-2">
-            <span className="font-semibold">Buy $TSBot tokens:</span>
-            {!socialTasksCompleted.boughtTokens ? (
-              <button
-                onClick={() => handleSocialTask('buyTokens')}
-                className="task-button"
-              >
-                Buy Tokens
-              </button>
-            ) : (
-              <span className="text-green-500">Completed!</span>
-            )}
-          </li>
+          {TASKS_CONFIG.map((task) => (
+            <li key={task.id} className="flex items-center justify-between py-2 border-b border-gray-700">
+              <span className="font-semibold">{task.label}:</span>
+              {!socialTasksCompleted[task.id] ? (
+                isLoading[task.id] ? (
+                  <div className="spinner-border animate-spin inline-block w-4 h-4 border-4 rounded-full border-blue-500 border-t-transparent"></div>
+                ) : (
+                  <button
+                    onClick={() => handleSocialTask(task)}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    {task.actionText}
+                  </button>
+                )
+              ) : (
+                <span className="text-green-500 animate-fade-in">✔️</span>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
