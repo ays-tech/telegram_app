@@ -1,6 +1,6 @@
 // pages/index.js
 "use client";
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react'; // Import useEffect from React
 import { FaUserFriends, FaChartBar, FaTasks, FaHandPointer } from 'react-icons/fa';
 import TapToEarnTab from '../components/TapToEarnTab';
 import TaskTab from '../components/TaskTab';
