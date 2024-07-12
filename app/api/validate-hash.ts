@@ -2,7 +2,7 @@
 import crypto from 'crypto';
 
 export default function handler(req, res) {
-  const secretKey = 'your_bot_token_here'; // Replace with your bot's token
+  const secretKey = '6703012798:AAGiDcN_qzMFnFdC4irTkHm8eDHK9S9dLY0'; // Replace with your bot's token
 
   const checkString = Object.keys(req.query)
     .sort()
