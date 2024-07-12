@@ -1,5 +1,5 @@
 // pages/init-data.js
-import { useTelegramInitData } from '../hooks/useTelegramInitData';
+import { useTelegramInitData } from './hooks/useTelegramInitData';
 
 export default function InitData() {
   const initData = useTelegramInitData();
