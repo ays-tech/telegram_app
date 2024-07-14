@@ -116,7 +116,7 @@ export default function TapToEarnTab() {
         >
           {/* Reduced image size and adjusted styling */}
           <img
-            src="/tsbot.jpg" // Replace with your image path relative to the public directory
+            src="/coin.webp" // Replace with your image path relative to the public directory
             alt="Avatar"
             className="w-full h-full object-cover"
           />

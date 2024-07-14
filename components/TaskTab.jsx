@@ -4,43 +4,37 @@ const TASKS_CONFIG = [
   {
     id: 'twitterFollow',
     label: 'Follow $TSBot on Twitter',
-    url: 'https://twitter.com/turbosignals',
+    url: 'https://twitter.com/{name}',
     actionText: 'Follow',
   },
   {
     id: 'instagramFollow',
     label: 'Follow $TSBot on Instagram',
-    url: 'https://www.instagram.com/turbosignalstrading/',
+    url: 'https://www.instagram.com/{name_of_instagram}/',
     actionText: 'Follow',
   },
   {
     id: 'telegramJoin',
-    label: 'Join $TSBot Telegram group',
+    label: 'Join  Telegram group',
     actionText: 'Join',
     customAction: true, // Special case for custom action
   },
   {
     id: 'twitterRetweet',
-    label: 'Retweet $TSBot\'s tweet',
-    url: 'https://twitter.com/turbosignals/status/1808800471437414713?s=52&t=aFmrCA95ZOgooiaYjEAooA',
+    label: 'Retweet',
+    url: 'https://twitter.com/{retweet_link}',
     actionText: 'Retweet',
   },
-  {
-    id: 'vote',
-    label: 'Vote us on coinmooner',
-    url: 'https://coinmooner.com/coin/turbosignals-tsbot',
-    actionText: 'Vote',
-    
-  }, 
+ 
 {
     id: 'youtubeFollow',
     label: 'Subscribe Youtube channel',
-    url: 'https://youtube.com/turbosignals/',
+    url: 'https://youtube.com/{youtube_id}/',
     actionText: 'Follow',
   },
   {
     id: 'buyTokens',
-    label: 'Buy $TSBot tokens',
+    label: 'Buy tokens',
     actionText: 'Buy Tokens',
     customAction: true, // Special case for custom action
   },
@@ -101,7 +95,7 @@ export default function TaskTab() {
 
     if (hasJoinedTelegram) {
       completeTask(task.id);
-      window.open('https://t.me/turbosignalscommunity', '_blank'); // Open Telegram group link if joined
+      window.open('https://t.me/{telegram_link}', '_blank'); // Open Telegram group link if joined
     } else {
       alert('Please join the Telegram group to complete this task.');
       setIsLoading((prevLoading) => ({ ...prevLoading, [task.id]: false }));
