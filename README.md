@@ -88,11 +88,11 @@ _Figure 2: Task completion interface with social media tasks._
 ### Contributing
 Contributions are welcome! If you'd like to contribute to TSBot Mini App, please follow these steps:
 
-# Fork the repository.
-# Create a new branch (git checkout -b feature/your-feature).
-# Make your changes.
-# Commit your changes (git commit -am 'Add some feature').
-# Push to the branch (git push origin feature/your-feature).
-# Create a new Pull Request.
+- Fork the repository.
+- Create a new branch (git checkout -b feature/your-feature).
+- Make your changes.
+- Commit your changes (git commit -am 'Add some feature').
+- Push to the branch (git push origin feature/your-feature).
+- Create a new Pull Request.
 
 
