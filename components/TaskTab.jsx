@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 const TASKS_CONFIG = [
   {
     id: 'twitterFollow',
-    label: 'Follow $TSBot on Twitter',
+    label: 'Follow $coinapp on Twitter',
     url: 'https://twitter.com/{name}',
     actionText: 'Follow',
   },
   {
     id: 'instagramFollow',
-    label: 'Follow $TSBot on Instagram',
+    label: 'Follow $coinapp on Instagram',
     url: 'https://www.instagram.com/{name_of_instagram}/',
     actionText: 'Follow',
   },
