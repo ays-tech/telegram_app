@@ -70,14 +70,6 @@ npm run dev
 yarn dev
 
 
-### Usage
-# Log in with your Telegram account to access the dashboard.
-# Complete the listed tasks to earn points.
-# View your referral count and points earned.
-# Explore top referrals and their points.
-# Enjoy a responsive and engaging user experience.
-## Usage
-
 1. Log in with your Telegram account to access the dashboard.
 2. Complete the listed tasks to earn points.
 3. View your referral count and points earned.
