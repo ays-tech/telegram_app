@@ -1,22 +1,32 @@
-// pages/api/validate-hash.js
 import crypto from 'crypto';
+import { add_user } from '../../../lib/database'; // Adjust the path as needed
 
-export default function handler(req, res) {
-  const secretKey = '6703012798:AAGiDcN_qzMFnFdC4irTkHm8eDHK9S9dLY0'; // Replace with your bot's token
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
-  const checkString = Object.keys(req.query)
+function verifyTelegramAuth(data) {
+  const authData = { ...data };
+  delete authData.hash;
+  const checkString = Object.keys(authData)
     .sort()
-    .map((key) => `${key}=${req.query[key]}`)
+    .map((key) => `${key}=${authData[key]}`)
     .join('\n');
-
-  const hash = crypto
-    .createHmac('sha256', secretKey)
-    .update(checkString)
-    .digest('hex');
-
-  if (hash === req.query.hash) {
-    res.status(200).json({ success: true });
-  } else {
-    res.status(401).json({ success: false, message: 'Invalid hash' });
-  }
+  const secretKey = crypto.createHash('sha256').update(BOT_TOKEN).digest();
+  const hmac = crypto.createHmac('sha256', secretKey).update(checkString).digest('hex');
+  return hmac === data.hash;
 }
+
+export default async (req, res) => {
+  if (req.method === 'POST') {
+    const data = req.body;
+    if (verifyTelegramAuth(data) && Date.now() / 1000 - data.auth_date < 86400) {
+      const userId = data.id;
+      const username = data.username;
+      await add_user(userId, username); // Add user to the database
+      res.status(200).json({ status: 'ok', message: 'Authentication successful' });
+    } else {
+      res.status(403).json({ status: 'error', message: 'Authentication failed' });
+    }
+  } else {
+    res.status(405).json({ status: 'error', message: 'Method not allowed' });
+  }
+};

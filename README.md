@@ -76,6 +76,21 @@ yarn dev
 # View your referral count and points earned.
 # Explore top referrals and their points.
 # Enjoy a responsive and engaging user experience.
+## Usage
+
+1. Log in with your Telegram account to access the dashboard.
+2. Complete the listed tasks to earn points.
+3. View your referral count and points earned.
+4. Explore top referrals and their points.
+5. Enjoy a responsive and engaging user experience.
+
+## Screenshots
+
+![Dashboard Screenshot](/public/mini.png)
+_Figure 1: Dashboard showing user tasks page._
+
+![Task Completion](/public/task.png)
+_Figure 2: Task completion interface with social media tasks._
 
 
 ### Contributing
